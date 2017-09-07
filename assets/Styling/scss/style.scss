@@ -1,0 +1,152 @@
+$Gamefont: 'Special Elite', 'Georgia', Times, Times New Roman, serif;
+ 
+
+
+.container {         // any text based css
+
+        #rules {
+           font-size: 12px;
+           line-height: 1.5;
+           font-family: $Gamefont;
+               }
+
+         #scenario {
+            font-size: 12px;
+            line-height: 1.5;
+            font-family: $Gamefont;
+               }
+
+         .gameTitle {
+            font-family: $Gamefont;
+            color:white;
+            height:75px;
+            width:100%;
+            margin-bottom: 2%;
+                }
+
+          .form-group {
+             font-family: $Gamefont; 
+                 }
+
+
+          }
+
+
+
+.jumbotron {    //css for volume icon
+          .volume {
+            position: relative;
+            float: right;
+            margin-bottom:2%;
+          }   
+
+          .mute {
+            position: relative;
+            float: right;
+            margin-bottom:2%;
+            display:none;
+          }
+
+
+        }
+
+
+
+.container{                      // Modal CSS
+
+          .mpopup-content {
+            background-image: url("images/startPaperResized.png");
+            background-repeat: no-repeat;
+            width: 600px;
+            height: 445px;
+            left: 50%;
+            top: 50%; 
+            margin-left: -25%;
+            margin-top: 150px;
+        }
+
+          .mpopup {
+            position: absolute;
+            left:15% !important;
+            z-index:1;
+            width:100%;
+            border-radius: 5px;
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s;
+            margin: 0;
+                  }
+
+          #gamerules,#start {
+            width:200px;
+            margin-left: 300px;
+              }
+
+          #gamerules {
+            margin-top:245px;
+            margin-bottom: 15px;
+                }
+
+          #start {
+            margin-bottom: 15px;
+                }
+
+        }
+
+
+body {                                                 //all layout css
+  
+            background-image: url("images/brickResize.jpg");
+            background-repeat: repeat;
+
+
+          br {
+            background-color: black;
+              }
+
+          .row {
+            margin: 0;
+                }
+
+          .textHolder{
+              background-color: #ffcccc;
+              background-image: url("images/bulletinResize.jpg");
+              background-repeat: repeat;
+              border: #2e1a12 solid 8px;
+              -webkit-box-shadow: inset 0px 0px 10px rgba(0,0,0,1);
+              height:600px;
+              padding:5%;
+              color:black;
+              font-size: 1.5em;
+              margin-bottom:5%;
+                    }
+
+          .imageHolder{
+              background-color: #ffcccc;
+              background-image: url("images/ricePaper.png");
+              background-repeat: repeat;
+              height:600px;
+              padding:5%;
+              color:black;
+              font-size: 1.5em;
+              margin-bottom:5%;
+              box-shadow: 5px 5px 5px black;
+                      }
+
+          .jumbotron {
+              background-color: black;
+              color: white;
+                    }
+
+          #line {
+              color:black;
+                }
+
+
+         .brand {
+              margin-bottom: 2%;
+              margin-right: 2%;
+                }
+
+          }
