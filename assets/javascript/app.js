@@ -1,3 +1,26 @@
+$(document).ready(function(){
+var bgm = new Audio("bgm.mp3");
+  bgm.loop=true;
+    bgm.play();
+
+
+    var nextSFX = new Audio("PageTurn.mp3");
+    
+$(".volume").on("click",function() {
+
+    $(".volume").hide();
+     $(".volume2").show();
+     bgm.pause();
+  });
+  $(".volume2").on("click",function() {
+
+    $(".volume2").hide();
+     $(".volume").show();
+     
+      bgm.play();
+  });
+
+
 var config = {
     apiKey: "AIzaSyCrEZMsZawnMNSTCe_mteQBAaGpmuMQH6Y",
     authDomain: "groupproject-14138.firebaseapp.com",
@@ -41,7 +64,10 @@ var config = {
   //********************
   // Variables for data*
   //********************
-  var clue = "";
+  var clue1image = "";
+  var clue2image = "";
+  var clue3image = "";
+  var detimage ="";
   var murderer = "";
   var rules = "";
   var scenario = "";
@@ -82,7 +108,17 @@ var config = {
   // Get mystery data from firebase and hold in variables /
   //******************************************************/
   function getData(data) {
-    clue = data.val().clue;
+    //var imagepath = "/assets/images";
+
+    clue1image = data.val().clue;
+    clue2image = data.val().clue2;
+    clue3image = data.val().clue3;
+    suspect1image = data.val().suspect1.image;
+    suspect2image = data.val().suspect2.image;
+    suspect3image = data.val().suspect3.image;
+    detimage = data.val().detective;
+
+
     murderer = data.val().murderer;
     rules = data.val().rules;
     scenario = data.val().scenario;
@@ -94,7 +130,6 @@ var config = {
     suspect1answer2 = data.val().suspect1.answer2;
     suspect1answer3 = data.val().suspect1.answer3;
     suspect1bio = data.val().suspect1.bio;
-    suspect1image = data.val().suspect1.image;
 
     suspect2name = data.val().suspect2.name;
     suspect2question1 = data.val().suspect2.question1;
@@ -104,7 +139,6 @@ var config = {
     suspect2answer2 = data.val().suspect2.answer2;
     suspect2answer3 = data.val().suspect2.answer3;
     suspect2bio = data.val().suspect2.bio;
-    suspect2image = data.val().suspect2.image;
 
     suspect3name = data.val().suspect3.name;
     suspect3question1 = data.val().suspect3.question1;
@@ -114,9 +148,11 @@ var config = {
     suspect3answer2 = data.val().suspect3.answer2;
     suspect3answer3 = data.val().suspect3.answer3;
     suspect3bio = data.val().suspect3.bio;
-    suspect3image = data.val().suspect3.image;
 
-    console.log("clue: " + clue);
+    console.log("clue1: " + clue1image);
+    console.log("clue2: " + clue2image);
+    console.log("clue3: " + clue3image);
+    console.log("det: " + detimage);
     console.log("murderer: " + murderer);
     console.log("rules: " + rules);
     console.log("scenario: " + scenario);
@@ -160,6 +196,7 @@ var config = {
   //****************************************************/
   var effect = "";
   var br = $("<br>").text();
+  var p = $("<p>");
 
   //*****************************/
   // Runs behind GameRules button/
@@ -178,20 +215,29 @@ var config = {
     $("#scenario").append(h3);
     $("#scenario").append(br);
     $("#scenario").append(scenario); 
-    $("#scenario").append(br);
+    //$("#scenario").append(p);
     //**************************************************/
     // Add Next button to get to game from first "view" /
     //**************************************************/
-    var nextBtn = $("<button id='next' style='float:right'>").text("Next");
+    var h3 = $("<h3>").text("");
+    $("#scenario").append(h3);
+    var nextBtn = $("<button id='next' style='float:right'>").text("Interview");
     $("#scenario").append(nextBtn);
-  }
+  
 
+    //Add clues///
+    $('#buttons').append("<img class='clues' id='clue1' src="+clue1image+" />");
+    $('#buttons').append("<img class='clues' id='clue2' src="+clue2image+" />");
+    $('#buttons').append("<img class='clues' id='clue3' src="+clue3image+" />");
+    $('#buttons').append("<img class='clues' id='clue4' src="+detimage+" />");
+  }
   //*****************************/
   // Runs behind Previous button /
   //*****************************/
   function rulesScenarioPrevious() {
     $("#rules").empty();
-    $("#scenario").empty(); 
+    $("#scenario").empty();
+    $( "#text").empty(); 
     $( "#buttons").empty();
     var h3 = $("<h3>").text("Game Rules");
     $("#rules").append(h3);
@@ -208,10 +254,18 @@ var config = {
     //**************************************************/
     // Add Next button to get to game from first "view" /
     //**************************************************/
-    var nextBtn = $("<button id='next' style='float:right'>").text("Next");
+    var h3 = $("<h3>").text("");
+    $("#scenario").append(h3);
+    var nextBtn = $("<button id='next' style='float:right'>").text("Interview");
     $("#scenario").append(nextBtn);
-  }
+  
 
+    //Add clues///
+    $('#buttons').append("<img class='clues' id='clue1' src="+clue1image+" />")
+    $('#buttons').append("<img class='clues' id='clue2' src="+clue2image+" />")
+    $('#buttons').append("<img class='clues' id='clue3' src="+clue3image+" />")
+    $('#buttons').append("<img class='clues' id='clue4' src="+detimage+" />");
+  }
   //***********************************************************************/
   // Get randomly selected effect and apply to both buttons on Modal popup /
   //***********************************************************************/
@@ -231,32 +285,63 @@ var config = {
   // Create suspect buttons /
   //************************/
   function startGame() {
-    var suspect1Btn = $("<button id='suspect1' class='suspect'>").text("Suspect1");
-    var suspect2Btn = $("<button id='suspect2' class='suspect'>").text("Suspect2");
-    var suspect3Btn = $("<button id='suspect3' class='suspect'>").text("Suspect3");
+    var suspect1Btn = $("<input type='image' class='suspects' id='suspect1' src="+suspect1image+">");
+    var suspect2Btn = $("<input type='image' class='suspects' id='suspect2' src="+suspect2image+">");
+    var suspect3Btn = $("<input type='image' class='suspects' id='suspect3' src="+suspect3image+">");
+    var h5 = $("<h5 id='clickimagetetxt'>").text("(click on an image)");
+    $("#text").append(h5);
     $("#buttons").append(suspect1Btn);
     $("#buttons").append(suspect2Btn);
     $("#buttons").append(suspect3Btn);
+    $(document).on("click", "#suspect1", suspect1);
+    $(document).on("click", "#suspect2", suspect2);
+    $(document).on("click", "#suspect3", suspect3);
+    $("#submit").attr("disabled", false);
+    $(".suspects").mouseenter(function(){
+       var text = "<div>Click on the suspects to Investigate!</div>";
+        $("#clickimagetetxt").html(text);
+
+    });
+    $(".suspects").mouseleave(function(){
+        $("#clickimagetetxt").empty();
+
+    });
+
   }
 
- //***************************/
- //Function for suspect click /
- //***************************/
-  $(document).on("click", ".suspect", function() {
+  var name = "";
+  var suspect = "";
+  
+  function suspect1() {
+    name = suspect1name;
+    suspect = "suspect1";
+    processSuspect();
+  }
+
+  function suspect2() {
+    name = suspect2name;
+    suspect = "suspect2";
+    processSuspect();
+  }
+
+  function suspect3() {
+    name = suspect3name;
+    suspect = "suspect3";
+    processSuspect();
+  }
+
+  function processSuspect() {
     $( "#rules" ).empty();
     $( "#scenario" ).empty();
-    var suspect = $(this).attr('id');
-    var h3 = $("<h3>").text("Bio");
+    var h3 = $("<h3>").text("Bio - " + name);
     $("#rules").append(h3);
-    var hr = $("<hr width='100%' id='line'>");
-    $("#rules").append(hr);
+    $("#rules").append(p);
     $("#rules").append("<h5><span id='bio'></span></h5>");
     $("#rules").append("<br>");
     $("#rules").append("<br>");
     var h3 = $("<h3>").text("Interview Questions");
     $("#scenario").append(h3);
-    var hr = $("<hr width='100%' id='line'>");
-    $("#scenario").append(hr);
+    $("#scenario").append(p);
     $("#scenario").append("<h5>Question1: <span id='question1'></span></h5>");
     $("#scenario").append("<h5>Answer1: <span id='answer1'></span></h5>");
     $("#scenario").append("<br>");  
@@ -265,39 +350,85 @@ var config = {
     $("#scenario").append("<br>"); 
     $("#scenario").append("<h5>Question3: <span id='question3'></span></h5>");
     $("#scenario").append("<h5>Answer3: <span id='answer3'></span></h5>");
-    $("#scenario").append("<br>"); 
-    var prevBtn = $("<button id='previous' style='float:right'>").text("Previous");
+    $("#scenario").append(p); 
+    var prevBtn = $("<button id='previous' style='float:right'>").text("Study Case");
     $("#scenario").append(prevBtn);
-    
-    //************************************************/
-    // Determine suspect and use applicable variables /
-    //************************************************/
-    if (suspect == "suspect1") {
-      $("#question1").html(suspect1question1);
-      $("#answer1").html(suspect1answer1);
-      $("#question2").html(suspect1question2);
-      $("#answer2").html(suspect1answer2);
-      $("#question3").html(suspect1question3);
-      $("#answer3").html(suspect1answer3);
-      $("#bio").html(suspect1bio);
-    } else if (suspect == "suspect2") {
-      $("#question1").html(suspect2question1);
-      $("#answer1").html(suspect2answer1);
-      $("#question2").html(suspect2question2);
-      $("#answer2").html(suspect2answer2);
-      $("#question3").html(suspect2question3);
-      $("#answer3").html(suspect2answer3);
-      $("#bio").html(suspect2bio);
-    } else if (suspect == "suspect3") {
-      $("#question1").html(suspect3question1);
-      $("#answer1").html(suspect3answer1);
-      $("#question2").html(suspect3question2);
-      $("#answer2").html(suspect3answer2);
-      $("#question3").html(suspect3question3);
-      $("#answer3").html(suspect3answer3);
-      $("#bio").html(suspect3bio);
-    }
+    $("#question1").html(eval(suspect + "question1"));
+    $("#answer1").html(eval(suspect + "answer1"));
+    $("#question2").html(eval(suspect + "question2"));
+    $("#answer2").html(eval(suspect + "answer2"));
+    $("#question3").html(eval(suspect + "question3"));
+    $("#answer3").html(eval(suspect + "answer3"));
+    $("#bio").html(eval(suspect + "bio"));
+  }
+
+
+  //"Win"Modal appears after User Wins with option to play again
+  var viewportWidth = $(window).width();
+  function winGame() {
+    var playAgain = $("<button id='playagain' class='btn btn-primary center-block'>").text("Play Again?");
+    $(".mpopup-content").css('background-image','url("assets/images/winAmelia.png")');
+    $(".mpopup-content").append(playAgain);
+    mpopup.style.display = "block";
+    if (viewportWidth < 768) {
+    $(".mpopup-content").css('background-image','url("assets/images/winAmeliaResize.png")');}
+    document.getElementById("mpopupBox").animate(
+          [
+              { transform: 'rotate(0)' },
+              { transform: 'rotate(720deg)' }
+          ], {
+              duration: 750,
+          }
+      );
+  }
+
+  //"Lose"Modal appears after User loses with option to play again
+   function loseGame() {
+    var playAgain = $("<button id='playagain' class='btn btn-primary center-block'>").text("Play Again?");
+    $(".mpopup-content").css('background-image','url("assets/images/losePaper.png")');
+    $(".mpopup-content").append(playAgain);
+    mpopup.style.display = "block";
+    if (viewportWidth < 768) {
+    $(".mpopup-content").css('background-image','url("assets/images/losePaperResize.png")');}
+    document.getElementById("mpopupBox").animate(
+          [
+              { transform: 'rotate(0)' },
+              { transform: 'rotate(720deg)' }
+          ], {
+              duration: 750,
+          }
+      );
+  }
+
+  //"Invalid" Modal appears if user enters an invalid name
+  function invalidInput() {
+    jQuery.noConflict();
+    $("#invalidModal").modal('show');
+  }
+
+ //Function for "Try Again" button in Invalid Modal
+ $(document).on("click", "#tryagain", function(){
+    jQuery.noConflict();
+    $(".modal").modal('hide');
+  }); 
+
+  //Function for "Play Again" click
+  $(document).on("click", "#playagain", function(){
+    mpopup.style.display = "none";
+    location.reload(true);
   });
+
+  //Function that limits input to only alpha characters
+  function alphaOnly(event) {
+  var value = String.fromCharCode(event.which);
+  var pattern = new RegExp(/[a-zåäö ]/i);
+  return pattern.test(value);
+  };
+
+  //alphaOnly function being called in the input box
+  $(document).on("keypress", "#userGuess", alphaOnly);
+
+ 
 
   //************************************************************************/
   // Click functions for StartGame, GameRules, Next, Previous button clicks /
@@ -305,30 +436,308 @@ var config = {
   $("#start").on("click", function(event) {
     startGame();
     runEffect();
+    let em = document.querySelector('#suspect1');
+    em.addEventListener('mouseover', function() {
+        let anim = em.animate({
+            transform: ['scale(1)', 'scale(1.25)']
+        }, 300);
+        em.style.transform = 'scale(1.25)';
+    });
+    em.addEventListener('mouseout', function() {
+        let anim = el.animate({
+            transform: ['scale(1.25)', 'scale(1)']
+        }, 300);
+        em.style.transform = '';
+    });
+    let en = document.querySelector('#suspect2');
+    en.addEventListener('mouseover', function() {
+        let anim = en.animate({
+            transform: ['scale(1)', 'scale(1.25)']
+        }, 300);
+        en.style.transform = 'scale(1.25)';
+    });
+    en.addEventListener('mouseout', function() {
+        let anim = en.animate({
+            transform: ['scale(1.25)', 'scale(1)']
+        }, 300);
+        en.style.transform = '';
+    });
+    let eo = document.querySelector('#suspect3');
+    eo.addEventListener('mouseover', function() {
+        let anim = eo.animate({
+            transform: ['scale(1)', 'scale(1.25)']
+        }, 300);
+        eo.style.transform = 'scale(1.25)';
+    });
+    eo.addEventListener('mouseout', function() {
+    let anim = eo.animate({
+        transform: ['scale(1.25)', 'scale(1)']
+    }, 300);
+    eo.style.transform = '';
+    });
+    
   });
 
   $("#gamerules").on("click", function(event) {
     rulesScenario();
     runEffect();
+    let ep = document.querySelector('#clue1');
+    ep.addEventListener('mouseover', function() {
+        let anim = ep.animate({
+            transform: ['scale(1)', 'scale(1.25)']
+        }, 300);
+        ep.style.transform = 'scale(1.25)';
+    });
+    ep.addEventListener('mouseout', function() {
+        let anim = ep.animate({
+            transform: ['scale(1.25)', 'scale(1)']
+        }, 300);
+        ep.style.transform = '';
+    });
+    let eq = document.querySelector('#clue2');
+    eq.addEventListener('mouseover', function() {
+        let anim = eq.animate({
+            transform: ['scale(1)', 'scale(1.25)']
+        }, 300);
+        eq.style.transform = 'scale(1.25)';
+    });
+    eq.addEventListener('mouseout', function() {
+        let anim = eq.animate({
+            transform: ['scale(1.25)', 'scale(1)']
+        }, 300);
+        eq.style.transform = '';
+    });
+    let er = document.querySelector('#clue3');
+    er.addEventListener('mouseover', function() {
+        let anim = er.animate({
+            transform: ['scale(1)', 'scale(1.25)']
+        }, 300);
+        er.style.transform = 'scale(1.25)';
+    });
+    er.addEventListener('mouseout', function() {
+        let anim = er.animate({
+            transform: ['scale(1.25)', 'scale(1)']
+        }, 300);
+        er.style.transform = '';
+    });
+    let es = document.querySelector('#clue4');
+    es.addEventListener('mouseover', function() {
+        let anim = es.animate({
+            transform: ['scale(1)', 'scale(1.25)']
+        }, 300);
+        es.style.transform = 'scale(1.25)';
+    });
+    es.addEventListener('mouseout', function() {
+        let anim = es.animate({
+            transform: ['scale(1.25)', 'scale(1)']
+        }, 300);
+        es.style.transform = '';
+    });
+
   });
 
-  $(document).on("click", "#previous", rulesScenarioPrevious);
+  $(document).on("click", "#previous", function() {
+    rulesScenarioPrevious();
+    let ep = document.querySelector('#clue1');
+    ep.addEventListener('mouseover', function() {
+        let anim = ep.animate({
+            transform: ['scale(1)', 'scale(1.25)']
+        }, 300);
+        ep.style.transform = 'scale(1.25)';
+    });
+    ep.addEventListener('mouseout', function() {
+        let anim = ep.animate({
+            transform: ['scale(1.25)', 'scale(1)']
+        }, 300);
+        ep.style.transform = '';
+    });
+    let eq = document.querySelector('#clue2');
+    eq.addEventListener('mouseover', function() {
+        let anim = eq.animate({
+            transform: ['scale(1)', 'scale(1.25)']
+        }, 300);
+        eq.style.transform = 'scale(1.25)';
+    });
+    eq.addEventListener('mouseout', function() {
+        let anim = eq.animate({
+            transform: ['scale(1.25)', 'scale(1)']
+        }, 300);
+        eq.style.transform = '';
+    });
+    let er = document.querySelector('#clue3');
+    er.addEventListener('mouseover', function() {
+        let anim = er.animate({
+            transform: ['scale(1)', 'scale(1.25)']
+        }, 300);
+        er.style.transform = 'scale(1.25)';
+    });
+    er.addEventListener('mouseout', function() {
+        let anim = er.animate({
+            transform: ['scale(1.25)', 'scale(1)']
+        }, 300);
+        er.style.transform = '';
+    });
+    let es = document.querySelector('#clue4');
+    es.addEventListener('mouseover', function() {
+        let anim = es.animate({
+            transform: ['scale(1)', 'scale(1.25)']
+        }, 300);
+        es.style.transform = 'scale(1.25)';
+    });
+    es.addEventListener('mouseout', function() {
+        let anim = es.animate({
+            transform: ['scale(1.25)', 'scale(1)']
+        }, 300);
+        es.style.transform = '';
+    });
+
+nextSFX.play();
+  });
 
   $(document).on("click", "#next", function() {
     $( "#rules" ).empty();
     $( "#scenario" ).empty();
+    $( "#text").empty();
+    $( "#buttons" ).empty();
     startGame();
+    let em = document.querySelector('#suspect1');
+    em.addEventListener('mouseover', function() {
+        let anim = em.animate({
+            transform: ['scale(1)', 'scale(1.25)']
+        }, 300);
+        em.style.transform = 'scale(1.25)';
+    });
+    em.addEventListener('mouseout', function() {
+        let anim = el.animate({
+            transform: ['scale(1.25)', 'scale(1)']
+        }, 300);
+        em.style.transform = '';
+    });
+    let en = document.querySelector('#suspect2');
+    en.addEventListener('mouseover', function() {
+        let anim = en.animate({
+            transform: ['scale(1)', 'scale(1.25)']
+        }, 300);
+        en.style.transform = 'scale(1.25)';
+    });
+    en.addEventListener('mouseout', function() {
+        let anim = en.animate({
+            transform: ['scale(1.25)', 'scale(1)']
+        }, 300);
+        en.style.transform = '';
+    });
+    let eo = document.querySelector('#suspect3');
+    eo.addEventListener('mouseover', function() {
+        let anim = eo.animate({
+            transform: ['scale(1)', 'scale(1.25)']
+        }, 300);
+        eo.style.transform = 'scale(1.25)';
+    });
+    eo.addEventListener('mouseout', function() {
+    let anim = eo.animate({
+        transform: ['scale(1.25)', 'scale(1)']
+    }, 300);
+    eo.style.transform = '';
+    });
+    nextSFX.play();
   });
 
   //Click functions for the volume icon to switch b/w mute and play
-  $(".volume").on("click",function() {
+  // $(".volume").on("click",function() {
 
-    $(".volume").hide();
-     $(".mute").show();
-  });
-  $(".mute").on("click",function() {
+  //   $(".volume").hide();
+  //    $(".volume2").show();
+  // });
+  // $(".volume2").on("click",function() {
 
-    $(".mute").hide();
-     $(".volume").show();
-  });
-  
+  //   $(".volume2").hide();
+  //    $(".volume").show();
+  // });
+
+  //Click function for Submit button for User Guess
+
+  $("#submit").on("click", function(event) {
+
+    var userGuess = $("#userGuess").val().toLowerCase();
+    var correctAnswer = murderer.toLowerCase();
+    var suspect1Lc = suspect1name.toLowerCase();
+    var suspect2Lc = suspect2name.toLowerCase();
+    var suspect3Lc = suspect3name.toLowerCase();
+    console.log(userGuess);
+    $("#userGuess").val("");
+
+   
+    
+    if(userGuess!==suspect1Lc&&userGuess!==suspect2Lc&userGuess!==suspect3Lc) {
+      invalidInput();
+    }
+
+    else if(userGuess===correctAnswer) {
+      console.log("You won!");
+      winGame();
+      
+    }
+    else{
+      loseGame();
+    }
+    
+
+    });
+
+  //************************************************************************/
+  // Web Animations API Code /
+  //************************************************************************/
+
+//Changes button sizes
+let el = document.querySelector('.volume');
+el.addEventListener('mouseover', function () {
+    let anim = el.animate({
+        transform: ['scale(1)', 'scale(1.25)']
+    }, 300);
+    el.style.transform = 'scale(1.25)';
+});
+el.addEventListener('mouseout', function () {
+    let anim = el.animate({
+        transform: ['scale(1.25)', 'scale(1)']
+    }, 300);
+    el.style.transform = '';
+});
+
+let elem = document.querySelector('.volume2');
+elem.addEventListener('mouseover', function () {
+    let anim = elem.animate({
+        transform: ['scale(1)', 'scale(1.25)']
+    }, 300);
+    elem.style.transform = 'scale(1.25)';
+});
+elem.addEventListener('mouseout', function () {
+    let anim = el.animate({
+        transform: ['scale(1.25)', 'scale(1)']
+    }, 300);
+    elem.style.transform = '';
+});
+
+//Add increase size and Fade effects to modal with Web API
+document.getElementById("mpopupBox").animate(
+    { transform: ['scale(.25)','scale(1)']},
+ {duration:1000});
+
+document.getElementById("mpopupBox").animate([ 
+  { opacity: 0 },
+  { opacity: .5, easing: 'ease-in' },
+  { opacity: 1 },
+  ], 750);
+
+document.getElementById("rules").animate([ 
+  { opacity: 0 },
+  { opacity: .5, easing: 'ease-in' },
+  { opacity: 1 },
+  ], 2500);
+
+document.getElementById("scenario").animate([ 
+  { opacity: 0 },
+  { opacity: .5, easing: 'ease-in' },
+  { opacity: 1 },
+  ], 2500);
+
+});
