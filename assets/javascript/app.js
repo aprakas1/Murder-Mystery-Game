@@ -5,6 +5,8 @@ var bgm = new Audio("bgm.mp3");
 
 
     var nextSFX = new Audio("PageTurn.mp3");
+    var playGameSound = new Audio("playGameSound.mp3");
+    var mouseover= new Audio("mouseover.mp3");
     
 $(".volume").on("click",function() {
 
@@ -300,7 +302,7 @@ var config = {
     $(".suspects").mouseenter(function(){
        var text = "<div>Click on the suspects to Investigate!</div>";
         $("#clickimagetetxt").html(text);
-
+        mouseover.play();
     });
     $(".suspects").mouseleave(function(){
         $("#clickimagetetxt").empty();
@@ -342,14 +344,14 @@ var config = {
     var h3 = $("<h3>").text("Interview Questions");
     $("#scenario").append(h3);
     $("#scenario").append(p);
-    $("#scenario").append("<h5>Question1: <span id='question1'></span></h5>");
-    $("#scenario").append("<h5>Answer1: <span id='answer1'></span></h5>");
+    $("#scenario").append("<h5>Question 1: <span id='question1'></span></h5>");
+    $("#scenario").append("<h5>Answer 1: <span id='answer1'></span></h5>");
     $("#scenario").append("<br>");  
-    $("#scenario").append("<h5>Question2: <span id='question2'></span></h5>");
-    $("#scenario").append("<h5>Answer2: <span id='answer2'></span></h5>");
+    $("#scenario").append("<h5>Question 2: <span id='question2'></span></h5>");
+    $("#scenario").append("<h5>Answer 2: <span id='answer2'></span></h5>");
     $("#scenario").append("<br>"); 
-    $("#scenario").append("<h5>Question3: <span id='question3'></span></h5>");
-    $("#scenario").append("<h5>Answer3: <span id='answer3'></span></h5>");
+    $("#scenario").append("<h5>Question 3: <span id='question3'></span></h5>");
+    $("#scenario").append("<h5>Answer 3: <span id='answer3'></span></h5>");
     $("#scenario").append(p); 
     var prevBtn = $("<button id='previous' style='float:right'>").text("Study Case");
     $("#scenario").append(prevBtn);
@@ -657,7 +659,7 @@ nextSFX.play();
   //Click function for Submit button for User Guess
 
   $("#submit").on("click", function(event) {
-
+      playGameSound.play();
     var userGuess = $("#userGuess").val().toLowerCase();
     var correctAnswer = murderer.toLowerCase();
     var suspect1Lc = suspect1name.toLowerCase();
