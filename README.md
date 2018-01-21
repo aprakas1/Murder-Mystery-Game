@@ -3,7 +3,7 @@
 <br>
 <img src="https://scontent-iad3-1.xx.fbcdn.net/v/t31.0-8/23737617_10209866551371262_2573539558325936771_o.jpg?oh=f8329758cd2fb7894e10779359a9c984&oe=5AED5EFF"></img>
  <h3> Click the link below to see a video of the gameplay! </h3>
-<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:activity:6315226245592416256" height="556" width="504" frameborder="0" allowfullscreen=""></iframe>
+https://www.linkedin.com/embed/feed/update/urn:li:activity:6315226245592416256
 
 
 <h4> Won best group project award in Coding bootcamp </h4>
